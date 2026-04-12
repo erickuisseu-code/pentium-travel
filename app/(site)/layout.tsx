@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Navbar from '@/components/shared/Navbar'
+import Footer from '@/components/shared/Footer'
 
 export const metadata: Metadata = {
   title: {
@@ -14,5 +16,11 @@ export default function SiteLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <main className="min-h-screen flex flex-col">{children}</main>
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <div className="flex-1">{children}</div>
+      <Footer />
+    </div>
+  )
 }
