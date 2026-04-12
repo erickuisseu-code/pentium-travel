@@ -153,7 +153,7 @@ France · USA · Canada · Espagne
 
 ## Logo & Identité visuelle
 
-- **Fichier** : PNG fond blanc, à placer dans `public/images/logo.png`
+- **Fichier** : `public/images/logo.jpeg` (JPEG fourni par le client)
 - **Composition** : 3 arcs concentriques (rouge, bleu ciel, rose) + avion noir silhouette + texte "PENTIUM TRAVEL" en gras noir
 - **Usage navbar** : `h-12 w-auto` — ne jamais déformer les proportions
 - **Couleurs extraites (source de vérité pour `tailwind.config.ts`)** :

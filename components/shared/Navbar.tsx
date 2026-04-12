@@ -26,7 +26,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/images/logo.png"
+              src="/images/logo.jpeg"
               alt="Pentium Travel"
               width={140}
               height={48}
