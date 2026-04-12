@@ -1,7 +1,5 @@
 import { NotFoundPage } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
-// @ts-ignore — alias configuré par withPayload dans next.config.ts
-import config from '@payload-config'
 
 type Args = {
   params: Promise<{ segments: string[] }>
@@ -9,6 +7,7 @@ type Args = {
 }
 
 const NotFound = ({ params, searchParams }: Args) =>
-  NotFoundPage({ config, importMap, params, searchParams })
+  // @ts-ignore
+  NotFoundPage({ config: import('@payload-config'), importMap, params, searchParams })
 
 export default NotFound
