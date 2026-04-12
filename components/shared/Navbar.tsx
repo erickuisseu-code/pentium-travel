@@ -21,16 +21,16 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-24">
 
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <Image
               src="/images/logo.jpeg"
               alt="Pentium Travel"
-              width={140}
-              height={48}
-              className="h-12 w-auto object-contain"
+              width={220}
+              height={80}
+              className="h-20 w-auto object-contain"
               priority
             />
           </Link>
