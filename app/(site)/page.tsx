@@ -1,7 +1,21 @@
+import HeroSection from '@/components/sections/HeroSection'
+import ServicesSection from '@/components/sections/ServicesSection'
+import DestinationsSection from '@/components/sections/DestinationsSection'
+import ProcessSection from '@/components/sections/ProcessSection'
+import VisaCheckSection from '@/components/sections/VisaCheckSection'
+import TestimonialsSection from '@/components/sections/TestimonialsSection'
+import CtaFinalSection from '@/components/sections/CtaFinalSection'
+
 export default function HomePage() {
   return (
-    <div className="flex items-center justify-center py-32 text-neutral-400 text-sm">
-      Page d'accueil — Phase 3 à venir
-    </div>
+    <>
+      <HeroSection />
+      <ServicesSection />
+      <DestinationsSection />
+      <ProcessSection />
+      <VisaCheckSection />
+      <TestimonialsSection />
+      <CtaFinalSection />
+    </>
   )
 }
