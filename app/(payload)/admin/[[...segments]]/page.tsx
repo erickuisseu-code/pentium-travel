@@ -1,6 +1,7 @@
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
-import config from '../../../../payload.config'
+// @ts-ignore — alias configuré par withPayload dans next.config.ts
+import config from '@payload-config'
 
 type Args = {
   params: Promise<{ segments: string[] }>
@@ -8,9 +9,9 @@ type Args = {
 }
 
 export const generateMetadata = ({ params, searchParams }: Args) =>
-  generatePageMetadata({ config: Promise.resolve(config), params, searchParams })
+  generatePageMetadata({ config, params, searchParams })
 
 const Page = ({ params, searchParams }: Args) =>
-  RootPage({ config: Promise.resolve(config), importMap, params, searchParams })
+  RootPage({ config, importMap, params, searchParams })
 
 export default Page

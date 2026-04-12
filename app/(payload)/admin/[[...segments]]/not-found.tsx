@@ -1,6 +1,7 @@
 import { NotFoundPage } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
-import config from '../../../../payload.config'
+// @ts-ignore — alias configuré par withPayload dans next.config.ts
+import config from '@payload-config'
 
 type Args = {
   params: Promise<{ segments: string[] }>
@@ -8,6 +9,6 @@ type Args = {
 }
 
 const NotFound = ({ params, searchParams }: Args) =>
-  NotFoundPage({ config: Promise.resolve(config), importMap, params, searchParams })
+  NotFoundPage({ config, importMap, params, searchParams })
 
 export default NotFound
