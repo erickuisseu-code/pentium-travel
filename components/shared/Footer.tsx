@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 
@@ -48,20 +47,9 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-brand-navy text-white">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-
-        {/* Image avion */}
-        <div className="relative h-64 lg:h-auto min-h-[300px]">
-          <Image
-            src="/images/footer-plane.jpg"
-            alt="Avion au coucher de soleil"
-            fill
-            className="object-cover"
-          />
-        </div>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Infos contact */}
-        <div className="px-8 py-12 lg:px-12 flex flex-col justify-center gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
           <h2 className="text-2xl font-display font-bold text-white">
             Contactez-nous
