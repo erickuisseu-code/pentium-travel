@@ -8,7 +8,7 @@
 
 ## Informations générales
 
-- **Dernière mise à jour** : 2026-04-12
+- **Dernière mise à jour** : 2026-04-13
 - **Phase en cours** : Modifications ciblées post-contenu
 - **Hébergement cible** : Hostinger VPS Ubuntu (Nginx + PM2)
 - **Référence design** : Voir `DESIGN.md`
@@ -122,6 +122,9 @@
 - [x] Champ `flag` ajouté à la collection `destinations` (emoji drapeau)
 - [x] Route `/api/seed` créée pour peupler la BD (6 témoignages, 15 destinations)
 - [x] Tous les numéros WhatsApp CTA → numéro France (+33 605 69 33 75)
+- [x] Section logement étudiant : grande image principale + grille 3×3 petites photos (Unsplash)
+- [x] `next.config.ts` : `images.unsplash.com` ajouté aux remotePatterns
+- [x] `TestimonialsSection` → fond blanc (refonte couleurs)
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 

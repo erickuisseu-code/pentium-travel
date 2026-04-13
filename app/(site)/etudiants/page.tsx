@@ -197,7 +197,9 @@ export default async function EtudiantsPage() {
       {/* Logement étudiant */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+            {/* Texte + petite galerie */}
             <div>
               <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
                 <span className="text-brand-blue">Logement</span> Étudiant
@@ -222,22 +224,47 @@ export default async function EtudiantsPage() {
               </ul>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-red text-white font-semibold hover:bg-brand-red-dark transition-colors group"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-red text-white font-semibold hover:bg-brand-red-dark transition-colors group mb-8"
               >
                 Demander un devis
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+
+              {/* Grille de petites photos */}
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=300&q=75',
+                  'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300&q=75',
+                  'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=300&q=75',
+                  'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=300&q=75',
+                  'https://images.unsplash.com/photo-1560448075-bb485b067938?w=300&q=75',
+                  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=75',
+                  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=300&q=75',
+                  'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=75',
+                  'https://images.unsplash.com/photo-1467987506553-8f3916508521?w=300&q=75',
+                ].map((src, i) => (
+                  <div key={i} className="aspect-square rounded-lg overflow-hidden">
+                    <img
+                      src={src}
+                      alt={`Logement étudiant ${i + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center"
-                >
-                  <Home size={24} className="text-neutral-300" />
-                </div>
-              ))}
+
+            {/* Grande image principale */}
+            <div className="lg:sticky lg:top-8">
+              <div className="rounded-2xl overflow-hidden shadow-xl aspect-[4/5]">
+                <img
+                  src="https://images.unsplash.com/photo-1631049552057-403cdb8f0658?w=800&q=80"
+                  alt="Logement étudiant confortable"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
+
           </div>
         </div>
       </section>

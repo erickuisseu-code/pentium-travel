@@ -4,10 +4,8 @@ import { withPayload } from '@payloadcms/next/withPayload'
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'fonts.gstatic.com',
-      },
+      { protocol: 'https', hostname: 'fonts.gstatic.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
 }
