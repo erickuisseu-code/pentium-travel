@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
-  GraduationCap, FileText, Home, ArrowRight,
-  CheckCircle2, Globe, BookOpen, Plane
+  GraduationCap, ArrowRight,
+  CheckCircle2, Plane
 } from 'lucide-react'
 import { getPayload } from 'payload'
 // @ts-ignore
@@ -13,26 +13,21 @@ export const metadata: Metadata = {
   description: "Pentium Travel accompagne les nouveaux bacheliers dans leur projet d'études à l'étranger : visa, université, logement.",
 }
 
-const pillars = [
+const services = [
   {
-    icon: BookOpen,
+    image: '/services/WhatsApp Image 2026-02-03 at 06.20.09 (1).jpeg',
     title: 'Consultation personnalisée',
     description: "Nous discutons de vos objectifs d'études, explorons les meilleures options universitaires et destinations adaptées à votre profil et à votre budget.",
   },
   {
-    icon: FileText,
+    image: '/services/WhatsApp Image 2026-02-03 at 06.20.10.jpeg',
     title: 'Assistance complète aux admissions',
     description: "Nous vous guidons à travers le processus d'admission, de la sélection des programmes à la préparation des documents nécessaires pour une candidature réussie.",
   },
   {
-    icon: Globe,
+    image: '/services/WhatsApp Image 2026-02-03 at 06.22.00 (4).jpeg',
     title: 'Processus de visa et logistique',
     description: "Bénéficiez de notre expertise pour les démarches de visa étudiant et l'organisation logistique de votre voyage, du départ à l'arrivée.",
-  },
-  {
-    icon: Home,
-    title: 'Logement étudiant',
-    description: "De la recherche de logement à la réservation de votre chambre, notre équipe vous assure une installation sereine dans votre nouvelle vie étudiante.",
   },
 ]
 
@@ -145,28 +140,29 @@ export default async function EtudiantsPage() {
         </div>
       </section>
 
-      {/* 4 piliers de service */}
+      {/* Services spécialisés avec images */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-12">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">Nos services spécialisés pour étudiants</h2>
             <p className="text-neutral-600">Notre approche est entièrement centrée sur l&apos;étudiant.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {pillars.map((p) => {
-              const Icon = p.icon
-              return (
-                <div key={p.title} className="flex items-start gap-5 bg-neutral-50 rounded-2xl p-6 border border-neutral-200">
-                  <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center shrink-0">
-                    <Icon size={22} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-brand-navy text-lg mb-2">{p.title}</h3>
-                    <p className="text-sm text-neutral-600 leading-relaxed">{p.description}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {services.map((s) => (
+              <div key={s.title} className="rounded-2xl overflow-hidden border border-neutral-200 shadow-sm hover:shadow-md transition-shadow bg-white">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-              )
-            })}
+                <div className="p-6">
+                  <h3 className="font-display font-bold text-brand-navy text-lg mb-2">{s.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{s.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
