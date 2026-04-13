@@ -7,6 +7,24 @@ export const metadata: Metadata = {
   description: "Pentium Travel vous accompagne pour votre visa touristique, réservation d'hôtel et billet d'avion vers toutes les destinations.",
 }
 
+const destinations = [
+  { flag: '🇫🇷', country: 'France' },
+  { flag: '🇲🇦', country: 'Maroc' },
+  { flag: '🇹🇳', country: 'Tunisie' },
+  { flag: '🇦🇪', country: 'Émirats Arabes Unis' },
+  { flag: '🇹🇷', country: 'Turquie' },
+  { flag: '🇪🇸', country: 'Espagne' },
+  { flag: '🇮🇹', country: 'Italie' },
+  { flag: '🇵🇹', country: 'Portugal' },
+  { flag: '🇨🇦', country: 'Canada' },
+  { flag: '🇺🇸', country: 'États-Unis' },
+  { flag: '🇸🇳', country: 'Sénégal' },
+  { flag: '🇨🇮', country: "Côte d'Ivoire" },
+  { flag: '🇬🇦', country: 'Gabon' },
+  { flag: '🇨🇳', country: 'Chine' },
+  { flag: '🇹🇭', country: 'Thaïlande' },
+]
+
 const services = [
   {
     icon: FileText,
@@ -134,8 +152,30 @@ export default function TouristesPage() {
         </div>
       </section>
 
+      {/* Destinations populaires */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <h2 className="font-display text-3xl font-bold text-brand-navy mb-3">Destinations populaires</h2>
+            <p className="text-neutral-600">Visa touristique vers toutes ces destinations et bien d&apos;autres encore.</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {destinations.map((d) => (
+              <span
+                key={d.country}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-50 border border-neutral-200 text-brand-navy font-semibold text-sm hover:border-brand-red hover:text-brand-red transition-colors"
+              >
+                <span>{d.flag}</span>
+                {d.country}
+              </span>
+            ))}
+          </div>
+          <p className="text-center text-sm text-neutral-400 mt-6">Et bien d&apos;autres destinations — contactez-nous pour toute demande spécifique.</p>
+        </div>
+      </section>
+
       {/* Process */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-neutral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-14">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">Comment ça se passe ?</h2>
