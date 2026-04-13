@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getPayload } from 'payload'
 // @ts-ignore
 import config from '@payload-config'
@@ -31,6 +33,8 @@ export default async function HomePage() {
     name: t.name,
     location: t.location,
     text: t.text ?? '',
+    type: (t.type as 'text' | 'video') ?? 'text',
+    videoUrl: (t as any).videoUrl ?? '',
   }))
 
   const slides: HeroSlide[] = slidesResult.docs.map((s) => ({

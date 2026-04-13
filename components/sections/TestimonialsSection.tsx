@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Quote, Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export type Testimonial = {
@@ -9,10 +9,79 @@ export type Testimonial = {
   name: string
   location: string
   text: string
+  type?: 'text' | 'video'
+  videoUrl?: string
 }
 
 type Props = {
   testimonials: Testimonial[]
+}
+
+/** Converts YouTube/Vimeo watch URL to embed URL */
+function toEmbedUrl(url: string): string | null {
+  if (!url) return null
+  // YouTube: watch?v=ID or youtu.be/ID or embed/ID
+  const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0`
+  // Vimeo: vimeo.com/ID
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/)
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`
+  return null
+}
+
+function TestimonialCard({ t, center }: { t: Testimonial; center?: boolean }) {
+  const embedUrl = t.type === 'video' ? toEmbedUrl(t.videoUrl ?? '') : null
+
+  return (
+    <div
+      className={cn(
+        'bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300',
+        center && 'bg-white border-brand-red shadow-md scale-105'
+      )}
+    >
+      {embedUrl ? (
+        /* Video testimonial */
+        <div className="rounded-xl overflow-hidden aspect-video bg-black">
+          <iframe
+            src={embedUrl}
+            title={`Témoignage de ${t.name}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+          />
+        </div>
+      ) : t.type === 'video' && t.videoUrl ? (
+        /* Video URL but unrecognized format — show link */
+        <a
+          href={t.videoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-brand-red text-sm font-semibold hover:underline"
+        >
+          <Play size={16} />
+          Voir la vidéo
+        </a>
+      ) : (
+        /* Text testimonial */
+        <>
+          <Quote size={24} className="text-brand-red shrink-0" />
+          <p className="text-neutral-600 text-sm leading-relaxed flex-1">
+            &ldquo;{t.text}&rdquo;
+          </p>
+        </>
+      )}
+
+      <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
+        <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red font-bold text-sm">
+          {t.name.charAt(0)}
+        </div>
+        <div>
+          <p className="text-brand-navy font-semibold text-sm">{t.name}</p>
+          <p className="text-neutral-500 text-xs">{t.location}</p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function TestimonialsSection({ testimonials }: Props) {
@@ -46,47 +115,13 @@ export default function TestimonialsSection({ testimonials }: Props) {
         {/* Cards desktop (3 colonnes) */}
         <div className="hidden md:grid grid-cols-3 gap-6 mb-10">
           {visible.map((t, i) => (
-            <div
-              key={`${t.id}-${i}`}
-              className={cn(
-                'bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300',
-                i === 1 && 'bg-white border-brand-red shadow-md scale-105'
-              )}
-            >
-              <Quote size={24} className="text-brand-red shrink-0" />
-              <p className="text-neutral-600 text-sm leading-relaxed flex-1">
-                &ldquo;{t.text}&rdquo;
-              </p>
-              <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
-                <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red font-bold text-sm">
-                  {t.name.charAt(0)}
-                </div>
-                <div>
-                  <p className="text-brand-navy font-semibold text-sm">{t.name}</p>
-                  <p className="text-neutral-500 text-xs">{t.location}</p>
-                </div>
-              </div>
-            </div>
+            <TestimonialCard key={`${t.id}-${i}`} t={t} center={i === 1} />
           ))}
         </div>
 
         {/* Card mobile (1 à la fois) */}
         <div className="md:hidden mb-8">
-          <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex flex-col gap-4">
-            <Quote size={24} className="text-brand-red" />
-            <p className="text-neutral-600 text-sm leading-relaxed">
-              &ldquo;{testimonials[current].text}&rdquo;
-            </p>
-            <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
-              <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red font-bold text-sm">
-                {testimonials[current].name.charAt(0)}
-              </div>
-              <div>
-                <p className="text-brand-navy font-semibold text-sm">{testimonials[current].name}</p>
-                <p className="text-neutral-500 text-xs">{testimonials[current].location}</p>
-              </div>
-            </div>
-          </div>
+          <TestimonialCard t={testimonials[current]} />
         </div>
 
         {/* Navigation */}
