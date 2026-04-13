@@ -10,6 +10,7 @@ import { HeroSlides } from './payload/collections/HeroSlides'
 import { Testimonials } from './payload/collections/Testimonials'
 import { Contacts } from './payload/collections/Contacts'
 import { Media } from './payload/collections/Media'
+import { SocialLinks } from './payload/globals/SocialLinks'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,6 +50,7 @@ export default buildConfig({
       ],
     },
   ],
+  globals: [SocialLinks],
   editor: lexicalEditor(),
   sharp,
   secret: process.env.PAYLOAD_SECRET || 'CHANGE_ME_IN_PRODUCTION',

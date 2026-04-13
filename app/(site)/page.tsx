@@ -45,10 +45,17 @@ export default async function HomePage() {
     }
   })
 
-  const slides: HeroSlide[] = slidesResult.docs.map((s) => ({
-    id: s.id,
-    imageUrl: (s as any).imageUrl ?? '',
-  }))
+  const slides: HeroSlide[] = slidesResult.docs.map((s) => {
+    const src = (s as any)
+    let imageUrl = ''
+    if (src.imageSource === 'upload') {
+      const img = src.image
+      imageUrl = img && typeof img === 'object' && 'url' in img ? (img as { url: string }).url : ''
+    } else {
+      imageUrl = src.imageUrl ?? ''
+    }
+    return { id: s.id, imageUrl }
+  })
 
   return (
     <>

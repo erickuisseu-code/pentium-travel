@@ -8,7 +8,7 @@
 
 ## Informations générales
 
-- **Dernière mise à jour** : 2026-04-13 (session 3)
+- **Dernière mise à jour** : 2026-04-13 (session 4)
 - **Phase en cours** : Modifications ciblées post-contenu
 - **Hébergement cible** : Hostinger VPS Ubuntu (Nginx + PM2)
 - **Référence design** : Voir `DESIGN.md`
@@ -142,6 +142,11 @@
   - `data/countries.ts` créé (types + COUNTRIES_SORTED + flagEmoji)
   - `scripts/update-passport-data.mjs` pour régénérer le JSON
   - `public/data/passport-index.json` généré (199 passeports)
+- [x] Global `social-links` créé dans Payload (Facebook, WhatsApp, TikTok, Instagram)
+- [x] `Footer.tsx` converti en composant async → lit les liens depuis le backoffice (`payload.findGlobal`)
+- [x] Collection `hero-slides` → support dual source : URL externe OU upload fichier (champ conditionnel)
+- [x] `app/(site)/page.tsx` → résolution image slide depuis `imageSource` (upload.url OU imageUrl)
+- [x] Couleur titre "Explorez des horizons..." sur page touristes → `text-brand-blue` (cohérent avec étudiants)
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 
@@ -182,6 +187,13 @@
 - Définition complète de l'architecture, des pages, des sections
 - Extraction de tout le contenu existant
 - Création des 3 fichiers de cadrage (CLAUDE.md, DESIGN.md, PROJECT.md)
+
+### 2026-04-13 — Session 4 (backoffice réseaux sociaux + hero slides dual source + couleur)
+- Global `social-links` (Payload) créé + enregistré dans `payload.config.ts`
+- `Footer.tsx` → async server component, liens dynamiques depuis le backoffice
+- `HeroSlides` collection → `imageSource` select + upload conditionnel OU URL externe
+- `page.tsx` → résolution image slide selon `imageSource`
+- Couleur "Explorez des horizons..." : `text-brand-navy` → `text-brand-blue` (cohérence étudiants/touristes)
 
 ### 2026-04-12 — Session 2 (build complet + admin fix + branding)
 - Phases 1 à 5 complétées (setup, composants, homepage, pages, backoffice)
