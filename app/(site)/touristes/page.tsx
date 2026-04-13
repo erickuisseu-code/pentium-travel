@@ -34,6 +34,24 @@ const values = [
   { icon: Star,   label: 'Excellence', desc: 'Niveau de satisfaction élevé garanti' },
 ]
 
+const destinationPhotos: Record<string, string> = {
+  'France': 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80',
+  'États-Unis': 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80',
+  'Canada': 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80',
+  'Espagne': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80',
+  'Maroc': 'https://images.unsplash.com/photo-1489493512598-d08130f49bea?w=600&q=80',
+  'Tunisie': 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600&q=80',
+  'Émirats Arabes Unis': 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80',
+  'Turquie': 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=600&q=80',
+  'Italie': 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&q=80',
+  'Portugal': 'https://images.unsplash.com/photo-1558370781-d6196949e317?w=600&q=80',
+  'Sénégal': 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
+  "Côte d'Ivoire": 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
+  'Gabon': 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
+  'Chine': 'https://images.unsplash.com/photo-1508804052814-cd3ba865a116?w=600&q=80',
+  'Thaïlande': 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80',
+}
+
 const steps = [
   { number: '01', title: "Votre idée de voyage", desc: 'Vous nous dites où vous voulez aller et quand.' },
   { number: '02', title: 'On planifie', desc: 'Nos experts définissent la meilleure stratégie visa, hôtel et vol.' },
@@ -154,22 +172,39 @@ export default async function TouristesPage() {
       </section>
 
       {/* Destinations populaires */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <h2 className="font-display text-3xl font-bold text-brand-navy mb-3">Destinations populaires</h2>
-            <p className="text-neutral-600">Visa touristique vers toutes ces destinations et bien d&apos;autres encore.</p>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="font-display text-3xl font-bold text-brand-blue mb-4">
+              Explorez des horizons qui éveillent vos sens
+            </h2>
+            <p className="text-neutral-600 leading-relaxed">
+              Plongez dans notre sélection de destinations conçues pour inspirer. Que vous recherchiez l&apos;aventure,
+              la découverte culturelle ou la quiétude d&apos;un nouveau départ, chaque voyage avec Pentium Travel
+              promet une expérience riche et mémorable. Laissez-vous transporter vers des lieux où chaque moment
+              est une découverte et chaque panorama une invitation à la sérénité.
+            </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {destinations.map((d) => (
-              <span
-                key={d.country}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-50 border border-neutral-200 text-brand-navy font-semibold text-sm hover:border-brand-red hover:text-brand-red transition-colors"
-              >
-                <span>{d.flag}</span>
-                {d.country}
-              </span>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {destinations.map((d) => {
+              const photo = destinationPhotos[d.country]
+              return (
+                <div key={d.country} className="relative rounded-xl overflow-hidden group">
+                  <div className="aspect-video">
+                    <img
+                      src={photo ?? `https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80`}
+                      alt={d.country}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center gap-2">
+                    <span className="text-xl">{d.flag}</span>
+                    <span className="text-white font-semibold text-sm drop-shadow">{d.country}</span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
           <p className="text-center text-sm text-neutral-400 mt-6">Et bien d&apos;autres destinations — contactez-nous pour toute demande spécifique.</p>
         </div>

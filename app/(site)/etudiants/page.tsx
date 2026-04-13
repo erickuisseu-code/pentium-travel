@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   description: "Pentium Travel accompagne les nouveaux bacheliers dans leur projet d'études à l'étranger : visa, université, logement.",
 }
 
+const etudiantPhotos: Record<string, string> = {
+  'France': 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80',
+  'États-Unis': 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80',
+  'Canada': 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80',
+  'Espagne': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80',
+}
+
 const services = [
   {
     image: '/services/WhatsApp Image 2026-02-03 at 06.20.09 (1).jpeg',
@@ -122,20 +129,36 @@ export default async function EtudiantsPage() {
       {/* Destinations études */}
       <section className="py-16 bg-neutral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <h2 className="font-display text-3xl font-bold text-brand-navy mb-3">Destinations d&apos;études</h2>
-            <p className="text-neutral-600">Nous accompagnons les étudiants vers les meilleures destinations académiques.</p>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="font-display text-3xl font-bold text-brand-blue mb-4">
+              Nos destinations d&apos;études phares
+            </h2>
+            <p className="text-neutral-600 leading-relaxed">
+              Pentium Travel vous ouvre les portes des meilleures universités à travers le monde.
+              Chaque destination est sélectionnée pour la qualité de son système éducatif,
+              les opportunités qu&apos;elle offre et l&apos;accompagnement que nous pouvons vous garantir sur place.
+            </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {destinations.map((d) => (
-              <span
-                key={d.country}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-neutral-200 text-brand-navy font-semibold text-sm shadow-sm hover:border-brand-red hover:text-brand-red transition-colors"
-              >
-                <span>{d.flag}</span>
-                {d.country}
-              </span>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {destinations.map((d) => {
+              const photo = etudiantPhotos[d.country]
+              return (
+                <div key={d.country} className="relative rounded-xl overflow-hidden group">
+                  <div className="aspect-video">
+                    <img
+                      src={photo ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'}
+                      alt={d.country}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center gap-2">
+                    <span className="text-xl">{d.flag}</span>
+                    <span className="text-white font-semibold text-sm drop-shadow">{d.country}</span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
