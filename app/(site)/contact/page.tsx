@@ -96,7 +96,7 @@ export default function ContactPage() {
               <div className="bg-green-50 border border-green-200 rounded-2xl p-5">
                 <p className="font-semibold text-green-800 mb-2 text-sm">Réponse rapide sur WhatsApp</p>
                 <a
-                  href="https://wa.me/237657644907"
+                  href="https://wa.me/33605693375"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-bold text-green-700 hover:text-green-900 transition-colors"
