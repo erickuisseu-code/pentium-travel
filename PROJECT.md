@@ -9,17 +9,35 @@
 ## Informations générales
 
 - **Dernière mise à jour** : 2026-04-12
-- **Phase en cours** : Phase 2 — Composants partagés (Navbar, Footer)
+- **Phase en cours** : Modifications ciblées post-contenu
 - **Hébergement cible** : Hostinger VPS Ubuntu (Nginx + PM2)
 - **Référence design** : Voir `DESIGN.md`
 - **Référence technique** : Voir `CLAUDE.md`
 
 ---
 
+## Stack technique réelle (post-setup)
+
+| Couche | Technologie | Notes |
+|---|---|---|
+| Framework | Next.js 16.2.3 (App Router) | Turbopack désactivé (`--webpack`) |
+| Styling | Tailwind CSS v4 (`@theme` dans globals.css) | Pas de tailwind.config.ts |
+| CMS | Payload CMS v3.82.1 | Self-hosted, route group `(payload)` |
+| Base de données | PostgreSQL local | `pentium_travel` / postgres:postgres123 |
+| Auth admin | Payload CMS natif | admin@pentiumtravel.com |
+| Emails | Resend (clé placeholder) | À configurer en production |
+| Médias | Stockage local | `/public/images/` |
+| Langage | TypeScript strict | |
+
+---
+
 ## Ce qui est décidé et figé
 
 ### Architecture
-- Next.js 15 App Router + Tailwind CSS + Payload CMS v3 + PostgreSQL
+- Next.js App Router avec **deux route groups** distincts :
+  - `(site)` → layout root avec Navbar/Footer/fonts/globals.css
+  - `(payload)` → layout root avec Payload `RootLayout` + `handleServerFunctions`
+- **Pas de `app/layout.tsx` racine** (supprimé — pattern multiple root layouts)
 - 4 pages publiques : `/` · `/etudiants` · `/touristes` · `/contact`
 - 1 espace admin : `/admin` (Payload CMS)
 - Visa Check = section homepage (pas de page dédiée)
@@ -45,96 +63,92 @@
 
 ---
 
-## Ce qui est fait
+## Ce qui est fait ✅
 
-- [x] Analyse complète de l'ancien site (6 captures analysées)
-- [x] Extraction du contenu : témoignages, services, contacts, horaires
-- [x] Définition de l'architecture technique (stack figée)
-- [x] Définition des pages et sections
-- [x] Création de `CLAUDE.md` (référence technique et contenu)
-- [x] Création de `DESIGN.md` (système de design 100% Tailwind)
-- [x] Création de `PROJECT.md` (ce fichier)
-- [x] Next.js 15 initialisé (TypeScript + Tailwind v4 + App Router)
-- [x] Payload CMS v3 installé (`@payloadcms/next`, `@payloadcms/db-postgres`)
-- [x] shadcn/ui initialisé (`components/ui/button.tsx`, `lib/utils.ts`)
-- [x] Dépendances installées : `resend`, `lucide-react`, `clsx`, `tailwind-merge`, `sharp`
-- [x] `globals.css` configuré avec palette Pentium Travel (Tailwind v4 `@theme`)
-- [x] Fonts Inter + Poppins via Google Fonts dans `app/layout.tsx`
-- [x] Structure dossiers créée : `app/(site)/`, `app/(payload)/`, `components/sections/`, `components/shared/`, `lib/`, `payload/collections/`
-- [x] `app/layout.tsx` (root) + `app/(site)/layout.tsx` créés
-- [x] `lib/visa-data.ts` créé (données visa, logique `checkVisa`, listes pays/destinations)
-- [x] Build Next.js validé sans erreur
+### Phase 1 — Setup projet
+- [x] Next.js 16.2.3 (TypeScript + Tailwind v4 + App Router)
+- [x] Payload CMS v3.82.1 installé et configuré
+- [x] PostgreSQL local configuré (`pentium_travel`)
+- [x] Migrations Payload appliquées (12 tables créées)
+- [x] Premier utilisateur admin créé (`admin@pentiumtravel.com`)
+- [x] `globals.css` avec palette Pentium Travel via `@theme`
+- [x] `tsconfig.json` avec alias `@payload-config` → `./payload.config.ts`
+- [x] `next.config.ts` avec `withPayload` wrapper
+- [x] `.env.local` configuré
+- [x] Structure dossiers créée
+
+### Phase 2 — Composants partagés
+- [x] `Navbar` (logo h-20, liens, CTA rouge, hamburger mobile)
+- [x] `Footer` (grille contacts, horaires, réseaux sociaux — sans logo)
+- [x] Layout `(site)/layout.tsx` → root layout avec `<html>`, fonts, globals.css
+
+### Phase 3 — Page d'accueil
+- [x] `HeroSection` (gradient sombre, badge, 2 CTA)
+- [x] `ServicesSection` (2 cartes service)
+- [x] `DestinationsSection` (listes texte par région)
+- [x] `ProcessSection` (timeline 5 étapes)
+- [x] `VisaCheckSection` (widget interactif 2 dropdowns)
+- [x] `TestimonialsSection` (carrousel 6 témoignages)
+- [x] `CtaFinalSection` (CTA rouge)
+- [x] `app/(site)/page.tsx` (homepage complète)
+
+### Phase 4 — Pages dédiées
+- [x] `/etudiants` (3 piliers, logement, CTA)
+- [x] `/touristes` (services, destinations, CTA)
+- [x] `/contact` (formulaire + ContactForm avec états idle/loading/success/error)
+- [x] `app/api/contact/route.ts` (handler POST)
+- [x] `lib/visa-data.ts` (checkVisa, pays, destinations)
+
+### Phase 5 — Backoffice Payload CMS
+- [x] Collection `destinations` (nom, région, type, actif)
+- [x] Collection `testimonials` (nom, pays, texte, vidéo URL, photo, publié, ordre)
+- [x] Collection `contacts` (formulaire, statut lead)
+- [x] Collection `media` (upload images)
+- [x] Admin 500 résolu (layout `(payload)` avec `RootLayout` Payload + server action)
+- [x] Admin UI brandé aux couleurs Pentium Travel :
+  - Sidebar fond noir (`#0D0D0D`)
+  - Boutons primaires rouge (`#B91C1C`)
+  - Focus ring bleu (`#7DB8D8`)
+  - Logo Pentium Travel sur page login et sidebar
+  - Bordure rouge en haut du header
 
 ---
 
-## Ce qui reste à faire (dans l'ordre)
+## Ce qui reste à faire
 
-### Phase 1 — Setup projet ✅ TERMINÉE
-- [x] `npx create-next-app@latest` avec TypeScript + Tailwind v4 + App Router
-- [x] Payload CMS v3 installé
-- [ ] Configurer PostgreSQL (local puis VPS) — à faire en Phase 5
-- [x] Palette Tailwind v4 configurée via `@theme` dans `globals.css`
-- [x] Fonts Inter + Poppins configurées
-- [x] shadcn/ui installé
-- [x] Structure de dossiers créée
-
-### Phase 2 — Composants partagés
-- [ ] `Navbar` (logo + liens + CTA + mobile hamburger)
-- [ ] `Footer` (2 colonnes : image avion + infos contact)
-- [x] Layout `(site)/layout.tsx` créé
-
-### Phase 3 — Page d'accueil (section par section)
-- [ ] `HeroSection`
-- [ ] `ServicesSection`
-- [ ] `DestinationsSection` (listes texte, données statiques initiales)
-- [ ] `ProcessSection` (timeline)
-- [ ] `VisaCheckSection` (widget + données JSON)
-- [ ] `TestimonialsSection` (données statiques initiales)
-- [ ] `CtaFinalSection`
-
-### Phase 4 — Pages dédiées
-- [ ] `/etudiants` (story narrative + 3 piliers + logement + CTA)
-- [ ] `/touristes` (narrative + services + CTA)
-- [ ] `/contact` (formulaire + envoi email via Resend)
-
-### Phase 5 — Backoffice Payload CMS
-- [ ] Collection `destinations` (nom, région, type, actif)
-- [ ] Collection `testimonials` (nom, pays, texte, photo, vidéo URL, publié)
-- [ ] Collection `contacts` (réception formulaires)
-- [ ] Brancher les sections homepage sur les données Payload
-
-### Phase 6 — Visa Check (données)
-- [ ] Construire `lib/visa-data.ts` (JSON passport → destination → statut)
-- [ ] Brancher le widget sur ces données
+### Modifications ciblées (en cours)
+- [ ] Connecter `TestimonialsSection` → données Payload (actuellement statique)
+- [ ] Connecter `DestinationsSection` → données Payload (actuellement statique)
+- [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
+- [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 
 ### Phase 7 — Déploiement VPS
 - [ ] Configurer Nginx
 - [ ] Configurer PM2
 - [ ] SSL via Let's Encrypt
-- [ ] Configurer domaine
+- [ ] Variables d'environnement production
+- [ ] Migration DB production
+
+---
+
+## Bugs / points d'attention
+
+- **Turbopack** : désactivé via `--webpack` dans tous les scripts (Turbopack casse les React Context de Payload)
+- **Logo warning** : Next.js Image avertit que width/height sont modifiés — non bloquant
+- **Resend** : clé placeholder `re_placeholder` — à remplacer en production
+- **Email adapter Payload** : non configuré → emails écrits dans la console (normal en dev)
 
 ---
 
 ## Décisions validées
 
 - [x] **Domaine** : pentium-travel.com
-- [x] **Logo** : fourni en JPEG/PNG (pas de SVG disponible)
-- [x] **Prix** : aucun prix affiché sur le site — si une image marketing contient un prix, on l'affiche telle quelle sans l'éditorialiser
+- [x] **Logo** : `public/images/logo.jpeg` (JPEG, pas de SVG)
+- [x] **Prix** : aucun prix affiché sur le site
 - [x] **Langue** : 100% français, pas d'internationalisation
-- [x] **Vidéos témoignages** : liens YouTube/Vimeo fournis par le client (pas d'upload direct)
-- [x] **Section "À propos"** : non décidée — à valider ultérieurement
-- [x] **Logo** : reçu en PNG (fond blanc, arcs rouge/bleu/rose + avion noir + texte "PENTIUM TRAVEL")
-
----
-
-## Règles de continuité (anti-hallucination)
-
-1. **Début de session** : lire ce fichier + `CLAUDE.md` avant tout
-2. **Ne jamais créer** une page, composant ou collection non listée ici
-3. **Ne jamais inventer** du contenu — tout le contenu réel est dans `CLAUDE.md`
-4. **Marquer comme fait** chaque tâche dès qu'elle est terminée
-5. **Déplacer vers "fait"** uniquement si le code est écrit ET testé
-6. **Fin de session** : mettre à jour la date et l'état de ce fichier
+- [x] **Vidéos témoignages** : liens YouTube/Vimeo (pas d'upload direct)
+- [x] **Déploiement** : différé (à faire quand le site est finalisé)
+- [x] **Sections** : Visa Check et Témoignages = sections homepage uniquement
 
 ---
 
@@ -145,4 +159,13 @@
 - Définition complète de l'architecture, des pages, des sections
 - Extraction de tout le contenu existant
 - Création des 3 fichiers de cadrage (CLAUDE.md, DESIGN.md, PROJECT.md)
-- **Prochaine étape** : attendre validation des décisions en attente, puis Phase 1 Setup
+
+### 2026-04-12 — Session 2 (build complet + admin fix + branding)
+- Phases 1 à 5 complétées (setup, composants, homepage, pages, backoffice)
+- Résolution du bug admin 500 : pattern "multiple root layouts" Next.js
+  - `app/layout.tsx` racine supprimé
+  - `(site)/layout.tsx` → root layout complet avec `<html>`, fonts, CSS
+  - `(payload)/layout.tsx` → `RootLayout` Payload avec `handleServerFunctions` server action
+- Désactivation Turbopack (`--webpack`) : Turbopack cassait les React Context Payload
+- Branding admin : CSS custom (`admin-custom.css`), `AdminLogo`, `AdminIcon`
+- **Prochaine étape** : modifications ciblées + connexion données Payload + Resend
