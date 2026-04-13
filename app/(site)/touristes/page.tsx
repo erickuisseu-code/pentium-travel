@@ -1,29 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Plane, Hotel, FileText, ArrowRight, CheckCircle2, Shield, Clock, Star } from 'lucide-react'
+import { getPayload } from 'payload'
+// @ts-ignore
+import config from '@payload-config'
 
 export const metadata: Metadata = {
   title: 'Touristes',
   description: "Pentium Travel vous accompagne pour votre visa touristique, réservation d'hôtel et billet d'avion vers toutes les destinations.",
 }
-
-const destinations = [
-  { flag: '🇫🇷', country: 'France' },
-  { flag: '🇲🇦', country: 'Maroc' },
-  { flag: '🇹🇳', country: 'Tunisie' },
-  { flag: '🇦🇪', country: 'Émirats Arabes Unis' },
-  { flag: '🇹🇷', country: 'Turquie' },
-  { flag: '🇪🇸', country: 'Espagne' },
-  { flag: '🇮🇹', country: 'Italie' },
-  { flag: '🇵🇹', country: 'Portugal' },
-  { flag: '🇨🇦', country: 'Canada' },
-  { flag: '🇺🇸', country: 'États-Unis' },
-  { flag: '🇸🇳', country: 'Sénégal' },
-  { flag: '🇨🇮', country: "Côte d'Ivoire" },
-  { flag: '🇬🇦', country: 'Gabon' },
-  { flag: '🇨🇳', country: 'Chine' },
-  { flag: '🇹🇭', country: 'Thaïlande' },
-]
 
 const services = [
   {
@@ -56,7 +41,23 @@ const steps = [
   { number: '04', title: 'Vous partez serein', desc: "Visa en main, billet et hôtel confirmés. L'esprit libre." },
 ]
 
-export default function TouristesPage() {
+export default async function TouristesPage() {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'destinations',
+    where: {
+      and: [
+        { type: { in: ['tourisme', 'both'] } },
+        { active: { equals: true } },
+      ],
+    },
+    limit: 50,
+  })
+  const destinations = result.docs.map((d) => ({
+    flag: (d as any).flag ?? '',
+    country: d.name,
+  }))
+
   return (
     <>
       {/* Hero */}

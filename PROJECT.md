@@ -117,8 +117,11 @@
 ## Ce qui reste à faire
 
 ### Modifications ciblées (en cours)
-- [ ] Connecter `TestimonialsSection` → données Payload (actuellement statique)
-- [ ] Connecter `DestinationsSection` → données Payload (actuellement statique)
+- [x] Connecter `TestimonialsSection` → données Payload (seeded + fetch local API)
+- [x] Connecter destinations étudiants/touristes → données Payload (seeded + fetch local API)
+- [x] Champ `flag` ajouté à la collection `destinations` (emoji drapeau)
+- [x] Route `/api/seed` créée pour peupler la BD (6 témoignages, 15 destinations)
+- [x] Tous les numéros WhatsApp CTA → numéro France (+33 605 69 33 75)
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 

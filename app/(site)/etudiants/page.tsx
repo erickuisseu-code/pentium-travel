@@ -4,18 +4,14 @@ import {
   GraduationCap, FileText, Home, ArrowRight,
   CheckCircle2, Globe, BookOpen, Plane
 } from 'lucide-react'
+import { getPayload } from 'payload'
+// @ts-ignore
+import config from '@payload-config'
 
 export const metadata: Metadata = {
   title: 'Étudiants',
   description: "Pentium Travel accompagne les nouveaux bacheliers dans leur projet d'études à l'étranger : visa, université, logement.",
 }
-
-const destinations = [
-  { flag: '🇫🇷', country: 'France' },
-  { flag: '🇺🇸', country: 'États-Unis' },
-  { flag: '🇨🇦', country: 'Canada' },
-  { flag: '🇪🇸', country: 'Espagne' },
-]
 
 const pillars = [
   {
@@ -48,7 +44,23 @@ const steps = [
   { number: '05', label: 'Ton installation' },
 ]
 
-export default function EtudiantsPage() {
+export default async function EtudiantsPage() {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'destinations',
+    where: {
+      and: [
+        { type: { in: ['etudes', 'both'] } },
+        { active: { equals: true } },
+      ],
+    },
+    limit: 20,
+  })
+  const destinations = result.docs.map((d) => ({
+    flag: (d as any).flag ?? '',
+    country: d.name,
+  }))
+
   return (
     <>
       {/* Hero */}

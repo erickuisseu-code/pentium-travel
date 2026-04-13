@@ -44,6 +44,12 @@ export const Destinations: CollectionConfig = {
       defaultValue: 'both',
     },
     {
+      name: 'flag',
+      type: 'text',
+      label: 'Emoji drapeau',
+      admin: { description: 'Ex: 🇫🇷' },
+    },
+    {
       name: 'active',
       type: 'checkbox',
       label: 'Afficher sur le site',
