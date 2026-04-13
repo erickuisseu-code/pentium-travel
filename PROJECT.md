@@ -8,7 +8,7 @@
 
 ## Informations générales
 
-- **Dernière mise à jour** : 2026-04-13
+- **Dernière mise à jour** : 2026-04-13 (session 3)
 - **Phase en cours** : Modifications ciblées post-contenu
 - **Hébergement cible** : Hostinger VPS Ubuntu (Nginx + PM2)
 - **Référence design** : Voir `DESIGN.md`
@@ -130,6 +130,9 @@
 - [x] Champ `photo` (URL) ajouté à la collection `destinations` → gérable depuis backoffice
 - [x] Seed mis à jour avec URLs photos pour les 15 destinations
 - [x] Pages lisent `d.photo` depuis la BD (plus de mapping hardcodé)
+- [x] Slider hero homepage : 5 photos HD (Paris, NY, Dubaï, Barcelone, Istanbul), auto 4s, pause au survol, indicateurs
+- [x] Collection `hero-slides` créée (label, imageUrl, order, active) → gérable depuis backoffice
+- [x] Seed mis à jour : 5 slides seedés
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 

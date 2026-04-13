@@ -6,6 +6,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { Destinations } from './payload/collections/Destinations'
+import { HeroSlides } from './payload/collections/HeroSlides'
 import { Testimonials } from './payload/collections/Testimonials'
 import { Contacts } from './payload/collections/Contacts'
 import { Media } from './payload/collections/Media'
@@ -28,6 +29,7 @@ export default buildConfig({
   },
   collections: [
     Destinations,
+    HeroSlides,
     Testimonials,
     Contacts,
     Media,

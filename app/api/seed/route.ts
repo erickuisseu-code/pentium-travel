@@ -56,6 +56,14 @@ const testimonialsData = [
   },
 ]
 
+const heroSlidesData = [
+  { label: 'Paris — Tour Eiffel',   imageUrl: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1920&q=85', order: 0, active: true },
+  { label: 'New York — Skyline',    imageUrl: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=1920&q=85', order: 1, active: true },
+  { label: 'Dubaï — Skyline',       imageUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=85', order: 2, active: true },
+  { label: 'Barcelone — Ville',     imageUrl: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1920&q=85', order: 3, active: true },
+  { label: 'Istanbul — Bosphore',   imageUrl: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=1920&q=85', order: 4, active: true },
+]
+
 const destinationsData = [
   // Études + Tourisme
   { name: 'France',       flag: '🇫🇷', region: 'europe',           type: 'both',     active: true, photo: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80' },
@@ -85,6 +93,11 @@ export async function GET(req: Request) {
   const payload = await getPayload({ config })
 
   // Clear existing data
+  const existingSlides = await payload.find({ collection: 'hero-slides', limit: 100 })
+  for (const s of existingSlides.docs) {
+    await payload.delete({ collection: 'hero-slides', id: s.id })
+  }
+
   const existingTestimonials = await payload.find({ collection: 'testimonials', limit: 100 })
   for (const t of existingTestimonials.docs) {
     await payload.delete({ collection: 'testimonials', id: t.id })
@@ -93,6 +106,13 @@ export async function GET(req: Request) {
   const existingDestinations = await payload.find({ collection: 'destinations', limit: 100 })
   for (const d of existingDestinations.docs) {
     await payload.delete({ collection: 'destinations', id: d.id })
+  }
+
+  // Seed hero slides
+  const createdSlides = []
+  for (const s of heroSlidesData) {
+    const created = await payload.create({ collection: 'hero-slides', data: s })
+    createdSlides.push(created.id)
   }
 
   // Seed testimonials
@@ -111,6 +131,7 @@ export async function GET(req: Request) {
 
   return NextResponse.json({
     ok: true,
+    slides: createdSlides.length,
     testimonials: createdTestimonials.length,
     destinations: createdDestinations.length,
   })
