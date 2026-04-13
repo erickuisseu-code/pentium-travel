@@ -4,7 +4,7 @@ import config from '@payload-config'
 import HeroSection, { type HeroSlide } from '@/components/sections/HeroSection'
 import ServicesSection from '@/components/sections/ServicesSection'
 import ProcessSection from '@/components/sections/ProcessSection'
-import VisaCheckSection from '@/components/sections/VisaCheckSection'
+import PassportChecker from '@/components/shared/PassportChecker'
 import TestimonialsSection, { type Testimonial } from '@/components/sections/TestimonialsSection'
 import CtaFinalSection from '@/components/sections/CtaFinalSection'
 
@@ -43,7 +43,7 @@ export default async function HomePage() {
       <HeroSection slides={slides} />
       <ServicesSection />
       <ProcessSection />
-      <VisaCheckSection />
+      <PassportChecker />
       <TestimonialsSection testimonials={testimonials} />
       <CtaFinalSection />
     </>

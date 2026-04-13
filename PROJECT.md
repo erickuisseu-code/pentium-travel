@@ -133,6 +133,15 @@
 - [x] Slider hero homepage : 5 photos HD (Paris, NY, Dubaï, Barcelone, Istanbul), auto 4s, pause au survol, indicateurs
 - [x] Collection `hero-slides` créée (label, imageUrl, order, active) → gérable depuis backoffice
 - [x] Seed mis à jour : 5 slides seedés
+- [x] PassportChecker intégré en remplacement de VisaCheckSection :
+  - 199 pays (passport-index-dataset, open-source)
+  - Combobox avec recherche filtrée + emoji drapeaux
+  - Chargement lazy du JSON (892 KB) au premier clic
+  - Résultat coloré instantané (vert/jaune/orange/rouge)
+  - Animations Framer Motion
+  - `data/countries.ts` créé (types + COUNTRIES_SORTED + flagEmoji)
+  - `scripts/update-passport-data.mjs` pour régénérer le JSON
+  - `public/data/passport-index.json` généré (199 passeports)
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 

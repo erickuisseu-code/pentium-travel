@@ -7,6 +7,7 @@
   /* Fonts */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Poppins', 'Inter', sans-serif;
+  --font-playfair: 'Poppins', 'Inter', sans-serif; /* alias used by PassportChecker */
 
   /* Brand colors — extraites du logo Pentium Travel */
   --color-brand-red:       #B91C1C;
@@ -74,6 +75,7 @@
   --input: #E5E7EB;
   --ring: #B91C1C;
   --radius: 0.625rem;
+  --color-navy: #0D0D0D; /* alias for PassportChecker → maps to brand-navy */
 }
 
 @layer base {
