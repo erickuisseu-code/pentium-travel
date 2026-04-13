@@ -58,7 +58,7 @@ export default function ContactPage() {
             <div className="flex flex-col gap-8">
               <div>
                 <h2 className="font-display text-2xl font-bold text-brand-navy mb-2">Nos coordonnées</h2>
-                <p className="text-neutral-500 text-sm">Disponibles 6 jours sur 7 pour vous accompagner.</p>
+                <p className="text-neutral-500 text-base">Disponibles 6 jours sur 7 pour vous accompagner.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -78,12 +78,12 @@ export default function ContactPage() {
                             <a
                               key={line}
                               href={info.href}
-                              className="text-sm text-brand-blue hover:text-brand-navy transition-colors"
+                              className="text-base text-brand-blue hover:text-brand-navy transition-colors"
                             >
                               {line}
                             </a>
                           ) : (
-                            <span key={line} className="text-sm text-neutral-600">{line}</span>
+                            <span key={line} className="text-base text-neutral-600">{line}</span>
                           )
                         )}
                       </div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
             {/* Formulaire */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-neutral-200">
               <h2 className="font-display text-2xl font-bold text-brand-navy mb-2">Envoyer un message</h2>
-              <p className="text-neutral-500 text-sm mb-6">Nous vous répondons sous 24h.</p>
+              <p className="text-neutral-500 text-base mb-6">Nous vous répondons sous 24h.</p>
               <ContactForm />
             </div>
           </div>

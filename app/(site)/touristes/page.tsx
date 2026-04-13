@@ -146,7 +146,7 @@ export default async function TouristesPage() {
                     <Icon size={22} className="text-white" />
                   </div>
                   <h3 className="font-display font-bold text-brand-navy text-xl mb-3">{s.title}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{s.description}</p>
+                  <p className="text-base text-neutral-600 leading-relaxed">{s.description}</p>
                 </div>
               )
             })}
@@ -206,7 +206,7 @@ export default async function TouristesPage() {
                   {s.number}
                 </div>
                 <h3 className="font-display font-bold text-brand-navy mb-2">{s.title}</h3>
-                <p className="text-sm text-neutral-500">{s.desc}</p>
+                <p className="text-base text-neutral-500">{s.desc}</p>
               </div>
             ))}
           </div>

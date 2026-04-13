@@ -84,7 +84,7 @@ export default function ServicesSection() {
                 {/* Features */}
                 <ul className="flex flex-col gap-3 mb-8 flex-1">
                   {s.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-neutral-700">
+                    <li key={f} className="flex items-start gap-2 text-base text-neutral-700">
                       <CheckCircle2 size={16} className="text-brand-red mt-0.5 shrink-0" />
                       {f}
                     </li>

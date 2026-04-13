@@ -60,7 +60,7 @@ export default function ProcessSection() {
                 <h3 className="font-display font-bold text-brand-navy text-base mb-2">
                   {step.title}
                 </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">
+                <p className="text-base text-neutral-600 leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -79,7 +79,7 @@ export default function ProcessSection() {
                 <h3 className="font-display font-bold text-brand-navy text-base mb-1">
                   {step.title}
                 </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">
+                <p className="text-base text-neutral-600 leading-relaxed">
                   {step.description}
                 </p>
               </div>

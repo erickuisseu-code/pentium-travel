@@ -175,7 +175,7 @@ export default async function EtudiantsPage() {
                 </div>
                 <div className="p-6">
                   <h3 className="font-display font-bold text-brand-navy text-lg mb-2">{s.title}</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">{s.description}</p>
+                  <p className="text-base text-neutral-600 leading-relaxed">{s.description}</p>
                 </div>
               </div>
             ))}
@@ -228,7 +228,7 @@ export default async function EtudiantsPage() {
                   "Accompagnement à l'intégration culturelle",
                   'Suivi post-arrivée',
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-neutral-700">
+                  <li key={item} className="flex items-start gap-2 text-base text-neutral-700">
                     <CheckCircle2 size={16} className="text-brand-red mt-0.5 shrink-0" />
                     {item}
                   </li>

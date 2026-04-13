@@ -147,6 +147,7 @@
 - [x] Collection `hero-slides` → support dual source : URL externe OU upload fichier (champ conditionnel)
 - [x] `app/(site)/page.tsx` → résolution image slide depuis `imageSource` (upload.url OU imageUrl)
 - [x] Couleur titre "Explorez des horizons..." sur page touristes → `text-brand-blue` (cohérent avec étudiants)
+- [x] Taille police corps de texte augmentée : `text-sm` → `text-base` (16px) sur descriptions services, étapes process, témoignages, logement, contact
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 
@@ -187,6 +188,13 @@
 - Définition complète de l'architecture, des pages, des sections
 - Extraction de tout le contenu existant
 - Création des 3 fichiers de cadrage (CLAUDE.md, DESIGN.md, PROJECT.md)
+
+### 2026-04-13 — Session 5 (taille police corps de texte)
+- Augmentation police corps : `text-sm` → `text-base` (16px) sur tous les composants de contenu
+  - ServicesSection (features), ProcessSection (descriptions), TestimonialsSection (texte)
+  - etudiants (descriptions services + checklist logement), touristes (descriptions + étapes)
+  - contact (infos coordonnées + liens)
+- Titres H1/H2/H3, badges, CTAs et labels UI : inchangés (hiérarchie préservée)
 
 ### 2026-04-13 — Session 4 (backoffice réseaux sociaux + hero slides dual source + couleur)
 - Global `social-links` (Payload) créé + enregistré dans `payload.config.ts`

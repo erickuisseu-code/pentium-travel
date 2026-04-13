@@ -66,7 +66,7 @@ function TestimonialCard({ t, center }: { t: Testimonial; center?: boolean }) {
         /* Text testimonial */
         <>
           <Quote size={24} className="text-brand-red shrink-0" />
-          <p className="text-neutral-600 text-sm leading-relaxed flex-1">
+          <p className="text-neutral-600 text-base leading-relaxed flex-1">
             &ldquo;{t.text}&rdquo;
           </p>
         </>
