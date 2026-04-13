@@ -28,14 +28,22 @@ export default async function HomePage() {
     }),
   ])
 
-  const testimonials: Testimonial[] = testimonialsResult.docs.map((t) => ({
-    id: t.id,
-    name: t.name,
-    location: t.location,
-    text: t.text ?? '',
-    type: (t.type as 'text' | 'video') ?? 'text',
-    videoUrl: (t as any).videoUrl ?? '',
-  }))
+  const testimonials: Testimonial[] = testimonialsResult.docs.map((t) => {
+    const avatar = t.avatar
+    const avatarUrl =
+      avatar && typeof avatar === 'object' && 'url' in avatar
+        ? (avatar as { url: string }).url
+        : null
+    return {
+      id: t.id,
+      name: t.name,
+      location: t.location,
+      text: t.text ?? '',
+      type: (t.type as 'text' | 'video') ?? 'text',
+      videoUrl: (t as any).videoUrl ?? '',
+      avatarUrl,
+    }
+  })
 
   const slides: HeroSlide[] = slidesResult.docs.map((s) => ({
     id: s.id,

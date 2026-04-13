@@ -11,6 +11,7 @@ export type Testimonial = {
   text: string
   type?: 'text' | 'video'
   videoUrl?: string
+  avatarUrl?: string | null
 }
 
 type Props = {
@@ -72,9 +73,17 @@ function TestimonialCard({ t, center }: { t: Testimonial; center?: boolean }) {
       )}
 
       <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
-        <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red font-bold text-sm">
-          {t.name.charAt(0)}
-        </div>
+        {t.avatarUrl ? (
+          <img
+            src={t.avatarUrl}
+            alt={t.name}
+            className="w-10 h-10 rounded-full object-cover shrink-0"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red font-bold text-sm shrink-0">
+            {t.name.charAt(0)}
+          </div>
+        )}
         <div>
           <p className="text-brand-navy font-semibold text-sm">{t.name}</p>
           <p className="text-neutral-500 text-xs">{t.location}</p>
