@@ -19,6 +19,12 @@ export default buildConfig({
     meta: {
       titleSuffix: '— Pentium Travel Admin',
     },
+    components: {
+      graphics: {
+        Logo: '/payload/components/AdminLogo#AdminLogo',
+        Icon: '/payload/components/AdminIcon#AdminIcon',
+      },
+    },
   },
   collections: [
     Destinations,

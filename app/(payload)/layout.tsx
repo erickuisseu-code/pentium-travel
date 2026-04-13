@@ -1,4 +1,5 @@
 import '@payloadcms/next/css'
+import './admin-custom.css'
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import type { ServerFunctionClient } from 'payload'
 import { importMap } from './admin/importMap'

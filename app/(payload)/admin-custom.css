@@ -1,0 +1,108 @@
+/**
+ * Pentium Travel — Admin UI branding
+ * Brand colors:
+ *   Red   #B91C1C  — primary CTAs, login, save
+ *   Blue  #7DB8D8  — focus rings
+ *   Navy  #0D0D0D  — sidebar background
+ */
+
+/* ─── Sidebar ─────────────────────────────────────────────── */
+@layer payload {
+  .nav,
+  .nav__wrap,
+  .nav__scroll {
+    background-color: #0D0D0D !important;
+  }
+
+  .nav__header {
+    border-bottom-color: #2a2a2a !important;
+  }
+
+  .nav-group__label {
+    color: #6b7280 !important;
+  }
+
+  .nav-group__toggle {
+    color: #9ca3af !important;
+  }
+
+  .nav__link {
+    color: #d1d5db !important;
+    border-radius: 6px;
+  }
+
+  .nav__link:hover {
+    background-color: rgba(255,255,255,0.07) !important;
+    color: #ffffff !important;
+  }
+
+  .nav__link--active,
+  .nav__link--active:hover {
+    background-color: #B91C1C !important;
+    color: #ffffff !important;
+  }
+
+  .nav__log-out {
+    border-top-color: #2a2a2a !important;
+    color: #9ca3af !important;
+  }
+
+  .nav__log-out:hover {
+    color: #ffffff !important;
+  }
+}
+
+/* ─── Primary buttons — override the CSS variable + background ─ */
+.btn--style-primary,
+.btn--style-primary:not(:disabled) {
+  --bg-color: #B91C1C !important;
+  --hover-bg: #7F1D1D !important;
+  --color: #ffffff !important;
+  background-color: #B91C1C !important;
+  color: #ffffff !important;
+}
+
+.btn--style-primary:hover,
+.btn--style-primary:focus {
+  background-color: #7F1D1D !important;
+}
+
+/* ─── App header ────────────────────────────────────────────── */
+@layer payload {
+  .app-header {
+    border-bottom: 2px solid #B91C1C !important;
+  }
+
+  .app-header__bg {
+    background-color: #0D0D0D !important;
+  }
+}
+
+/* ─── Focus ring (brand blue) ───────────────────────────────── */
+@layer payload {
+  :focus-visible {
+    outline-color: #7DB8D8 !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #7DB8D8 !important;
+    box-shadow: 0 0 0 2px rgba(125,184,216,0.25) !important;
+  }
+}
+
+/* ─── Login page card ───────────────────────────────────────── */
+@layer payload {
+  .template-minimal__wrap {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10) !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  .template-minimal__header {
+    border-bottom: 3px solid #B91C1C !important;
+    padding-bottom: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
