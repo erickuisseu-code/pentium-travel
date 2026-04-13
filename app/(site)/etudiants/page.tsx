@@ -239,9 +239,6 @@ export default async function EtudiantsPage() {
                   'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=300&q=75',
                   'https://images.unsplash.com/photo-1560448075-bb485b067938?w=300&q=75',
                   'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=75',
-                  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=300&q=75',
-                  'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=75',
-                  'https://images.unsplash.com/photo-1467987506553-8f3916508521?w=300&q=75',
                 ].map((src, i) => (
                   <div key={i} className="aspect-square rounded-lg overflow-hidden">
                     <img
@@ -255,8 +252,8 @@ export default async function EtudiantsPage() {
             </div>
 
             {/* Grande image principale */}
-            <div className="lg:sticky lg:top-8">
-              <div className="rounded-2xl overflow-hidden shadow-xl aspect-[4/5]">
+            <div className="self-stretch">
+              <div className="rounded-2xl overflow-hidden shadow-xl h-full min-h-[400px]">
                 <img
                   src="https://images.unsplash.com/photo-1631049552057-403cdb8f0658?w=800&q=80"
                   alt="Logement étudiant confortable"
