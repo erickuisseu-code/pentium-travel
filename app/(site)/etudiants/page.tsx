@@ -13,13 +13,6 @@ export const metadata: Metadata = {
   description: "Pentium Travel accompagne les nouveaux bacheliers dans leur projet d'études à l'étranger : visa, université, logement.",
 }
 
-const etudiantPhotos: Record<string, string> = {
-  'France': 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80',
-  'États-Unis': 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80',
-  'Canada': 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80',
-  'Espagne': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80',
-}
-
 const services = [
   {
     image: '/services/WhatsApp Image 2026-02-03 at 06.20.09 (1).jpeg',
@@ -61,6 +54,7 @@ export default async function EtudiantsPage() {
   const destinations = result.docs.map((d) => ({
     flag: (d as any).flag ?? '',
     country: d.name,
+    photo: (d as any).photo ?? '',
   }))
 
   return (
@@ -141,12 +135,11 @@ export default async function EtudiantsPage() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {destinations.map((d) => {
-              const photo = etudiantPhotos[d.country]
               return (
                 <div key={d.country} className="relative rounded-xl overflow-hidden group">
                   <div className="aspect-video">
                     <img
-                      src={photo ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'}
+                      src={d.photo || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'}
                       alt={d.country}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

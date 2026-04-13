@@ -125,6 +125,11 @@
 - [x] Section logement étudiant : grande image principale + grille 3×3 petites photos (Unsplash)
 - [x] `next.config.ts` : `images.unsplash.com` ajouté aux remotePatterns
 - [x] `TestimonialsSection` → fond blanc (refonte couleurs)
+- [x] Services étudiants : 3 vraies images marketing depuis `public/services/`
+- [x] Destinations : grille photo avec overlay (flag + nom) sur touristes et étudiants
+- [x] Champ `photo` (URL) ajouté à la collection `destinations` → gérable depuis backoffice
+- [x] Seed mis à jour avec URLs photos pour les 15 destinations
+- [x] Pages lisent `d.photo` depuis la BD (plus de mapping hardcodé)
 - [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
 - [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
 

@@ -50,6 +50,12 @@ export const Destinations: CollectionConfig = {
       admin: { description: 'Ex: 🇫🇷' },
     },
     {
+      name: 'photo',
+      type: 'text',
+      label: 'URL de la photo',
+      admin: { description: 'URL complète de la photo (ex: https://images.unsplash.com/...)' },
+    },
+    {
       name: 'active',
       type: 'checkbox',
       label: 'Afficher sur le site',
