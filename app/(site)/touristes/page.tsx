@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Plane, Hotel, FileText, ArrowRight, CheckCircle2, Shield, Clock, Star } from 'lucide-react'

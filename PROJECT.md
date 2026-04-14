@@ -122,13 +122,21 @@
 
 ## Ce qui reste à faire
 
-### Déploiement VPS (Hostinger)
-- [ ] Configurer Nginx (reverse proxy port 3000)
-- [ ] Configurer PM2 (process manager)
-- [ ] SSL via Let's Encrypt (certbot)
-- [ ] Variables d'environnement production (`.env` sur le VPS)
-- [ ] Migration DB production (PostgreSQL sur VPS)
-- [ ] Tester l'envoi email en production (domaine Brevo à configurer pour pentium-travel.com)
+### Déploiement VPS ✅ DONE
+- [x] VPS : 72.62.80.23 — Ubuntu, Node v20, PM2 v6, Nginx 1.24, PostgreSQL 16
+- [x] DB `pentium_travel` créée (user `pentium_user` / `pentium123`)
+- [x] Projet uploadé → `/var/www/pentium-travel/`
+- [x] `.env.local` production configuré (DB, Payload secret, Brevo SMTP)
+- [x] `npm ci` + `npm run build` exécutés sur le serveur
+- [x] PM2 : app `pentium-travel` (id 8), port 3003, `online`
+- [x] Nginx vhost configuré → reverse proxy port 3003
+- [x] SSL Let's Encrypt : `pentium-travel.synaptic-inc.ca` — TLS 1.3, expire 2026-07-13
+- [x] Schéma Payload poussé (14 tables créées via dev mode)
+- [x] Seed : 5 slides + 6 témoignages + 15 destinations (`/api/seed?secret=pentium-seed-2026`)
+- [x] Site live : **https://pentium-travel.synaptic-inc.ca**
+- [ ] Créer le premier admin Payload → https://pentium-travel.synaptic-inc.ca/admin
+- [ ] Configurer les réseaux sociaux dans `/admin → Paramètres → Réseaux sociaux`
+- [ ] Tester le formulaire contact en production (email Brevo → pentiumtravel@yahoo.com)
 
 ### Améliorations futures (non bloquantes)
 - [ ] SEO : Open Graph images par page
@@ -184,6 +192,19 @@ MAIL_TO=pentiumtravel@yahoo.com
 ---
 
 ## Journal des sessions
+
+### 2026-04-13 — Session 7 (déploiement VPS complet)
+- Déployé sur https://pentium-travel.synaptic-inc.ca (VPS 72.62.80.23)
+- DB PostgreSQL créée (pentium_travel / pentium_user)
+- Build Next.js + Payload sur le serveur
+- PM2 id 8, port 3003, online
+- Nginx reverse proxy + SSL Let's Encrypt TLS 1.3
+- Schéma Payload poussé via dev mode (14 tables)
+- Seed : 5 slides + 6 témoignages + 15 destinations
+- Patches prod synchronisés en local :
+  - `force-dynamic` sur contact, etudiants, touristes
+  - Footer.tsx : try/catch autour de findGlobal (résilience DB)
+  - payload.config.ts : `push: process.env.PAYLOAD_PUSH === 'true'`
 
 ### 2026-04-13 — Session 6 (email Brevo SMTP + sauvegarde contacts)
 - `nodemailer` + `@types/nodemailer` installés

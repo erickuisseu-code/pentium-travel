@@ -29,14 +29,22 @@ const instagramIcon = (
 )
 
 export default async function Footer() {
-  const payload = await getPayload({ config })
-  const social = await payload.findGlobal({ slug: 'social-links' })
+  let facebookHref: string | null = null
+  let whatsappHref: string | null = null
+  let tiktokHref: string | null = null
+  let instagramHref: string | null = null
 
-  const facebookHref = (social as any).facebook || null
-  const whatsappNumber = (social as any).whatsapp || null
-  const whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}` : null
-  const tiktokHref = (social as any).tiktok || null
-  const instagramHref = (social as any).instagram || null
+  try {
+    const payload = await getPayload({ config })
+    const social = await payload.findGlobal({ slug: 'social-links' })
+    facebookHref = (social as any).facebook || null
+    const whatsappNumber = (social as any).whatsapp || null
+    whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}` : null
+    tiktokHref = (social as any).tiktok || null
+    instagramHref = (social as any).instagram || null
+  } catch {
+    // DB not ready yet or tables missing — render without social links
+  }
 
   const socialLinks = [
     { label: 'Facebook',  href: facebookHref,  bg: 'bg-[#1877F2]', icon: facebookIcon },

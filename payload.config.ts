@@ -58,6 +58,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
+    push: process.env.PAYLOAD_PUSH === 'true',
     pool: {
       connectionString: process.env.DATABASE_URL,
     },
