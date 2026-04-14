@@ -148,8 +148,10 @@
 - [x] `app/(site)/page.tsx` → résolution image slide depuis `imageSource` (upload.url OU imageUrl)
 - [x] Couleur titre "Explorez des horizons..." sur page touristes → `text-brand-blue` (cohérent avec étudiants)
 - [x] Taille police corps de texte augmentée : `text-sm` → `text-base` (16px) sur descriptions services, étapes process, témoignages, logement, contact
-- [ ] Brancher Resend sur `app/api/contact/route.ts` (actuellement placeholder)
-- [ ] Sauvegarder les soumissions contact dans Payload (collection `contacts`)
+- [x] Brevo SMTP configuré (`smtp-relay.brevo.com:587`) via nodemailer
+- [x] `app/api/contact/route.ts` : email de notification → `pentiumtravel@yahoo.com` + email de confirmation → client
+- [x] Soumissions contact sauvegardées dans la collection `contacts` Payload (+ statut lead)
+- [x] `ContactForm.tsx` : options service corrigées (value = slug Payload, label = texte affiché)
 
 ### Phase 7 — Déploiement VPS
 - [ ] Configurer Nginx
@@ -188,6 +190,15 @@
 - Définition complète de l'architecture, des pages, des sections
 - Extraction de tout le contenu existant
 - Création des 3 fichiers de cadrage (CLAUDE.md, DESIGN.md, PROJECT.md)
+
+### 2026-04-13 — Session 6 (email Brevo SMTP + sauvegarde contacts)
+- nodemailer installé (`@types/nodemailer` inclus)
+- `.env.local` : variables SMTP_HOST/PORT/USER/PASS/FROM + MAIL_TO ajoutées (Brevo)
+- `app/api/contact/route.ts` : réécriture complète
+  - Sauvegarde dans Payload CMS collection `contacts`
+  - Email notification HTML → `pentiumtravel@yahoo.com` (replyTo = email client)
+  - Email confirmation HTML → adresse client
+- `ContactForm.tsx` : select service passe maintenant les slugs Payload (valeurs alignées)
 
 ### 2026-04-13 — Session 5 (taille police corps de texte)
 - Augmentation police corps : `text-sm` → `text-base` (16px) sur tous les composants de contenu

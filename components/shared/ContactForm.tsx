@@ -6,13 +6,13 @@ import { Send, Loader2 } from 'lucide-react'
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const services = [
-  'Visa étudiant',
-  'Accompagnement académique',
-  'Logement étudiant',
-  'Visa touristique',
-  "Réservation d'hôtel",
-  "Billet d'avion",
-  'Autre',
+  { value: 'visa-etudiant',           label: 'Visa étudiant' },
+  { value: 'accompagnement-academique', label: 'Accompagnement académique' },
+  { value: 'logement-etudiant',       label: 'Logement étudiant' },
+  { value: 'visa-touristique',        label: 'Visa touristique' },
+  { value: 'hotel',                   label: "Réservation d'hôtel" },
+  { value: 'billet-avion',            label: "Billet d'avion" },
+  { value: 'autre',                   label: 'Autre' },
 ]
 
 export default function ContactForm() {
@@ -96,7 +96,7 @@ export default function ContactForm() {
           >
             <option value="">-- Choisir --</option>
             {services.map((s) => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
         </div>
