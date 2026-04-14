@@ -1,22 +1,22 @@
 # PROJECT.md — État du projet Pentium Travel
 
-> Lire ce fichier EN PREMIER à chaque nouvelle session.  
-> Le mettre à jour EN FIN de session avant de fermer.  
+> Lire ce fichier EN PREMIER à chaque nouvelle session.
+> Le mettre à jour EN FIN de session avant de fermer.
 > Ne jamais agir sur des suppositions — vérifier ici l'état réel.
 
 ---
 
 ## Informations générales
 
-- **Dernière mise à jour** : 2026-04-13 (session 4)
-- **Phase en cours** : Modifications ciblées post-contenu
+- **Dernière mise à jour** : 2026-04-13 (session 6)
+- **Phase en cours** : Finitions front + préparation déploiement
 - **Hébergement cible** : Hostinger VPS Ubuntu (Nginx + PM2)
 - **Référence design** : Voir `DESIGN.md`
 - **Référence technique** : Voir `CLAUDE.md`
 
 ---
 
-## Stack technique réelle (post-setup)
+## Stack technique réelle
 
 | Couche | Technologie | Notes |
 |---|---|---|
@@ -25,201 +25,202 @@
 | CMS | Payload CMS v3.82.1 | Self-hosted, route group `(payload)` |
 | Base de données | PostgreSQL local | `pentium_travel` / postgres:postgres123 |
 | Auth admin | Payload CMS natif | admin@pentiumtravel.com |
-| Emails | Resend (clé placeholder) | À configurer en production |
-| Médias | Stockage local | `/public/images/` |
+| Emails | nodemailer + Brevo SMTP | smtp-relay.brevo.com:587 |
+| Médias | Stockage local VPS | `/public/uploads/` (Payload) + `/public/images/` |
+| Animations | Framer Motion | PassportChecker, HeroSection |
 | Langage | TypeScript strict | |
 
 ---
 
-## Ce qui est décidé et figé
+## Architecture (figée)
 
-### Architecture
 - Next.js App Router avec **deux route groups** distincts :
-  - `(site)` → layout root avec Navbar/Footer/fonts/globals.css
-  - `(payload)` → layout root avec Payload `RootLayout` + `handleServerFunctions`
-- **Pas de `app/layout.tsx` racine** (supprimé — pattern multiple root layouts)
+  - `(site)` → root layout avec Navbar/Footer/fonts/globals.css
+  - `(payload)` → root layout avec Payload `RootLayout` + `handleServerFunctions`
+- **Pas de `app/layout.tsx` racine** (supprimé — pattern multiple root layouts Next.js)
 - 4 pages publiques : `/` · `/etudiants` · `/touristes` · `/contact`
 - 1 espace admin : `/admin` (Payload CMS)
-- Visa Check = section homepage (pas de page dédiée)
-- Témoignages = section homepage (pas de page dédiée)
-- Destinations = listes texte uniquement, pas de photos, pas de pages détail
 
-### Contenu validé
-- Tous les témoignages extraits de l'ancien site (6 clients identifiés)
-- Contacts officiels : +237 657 644 907 · +33 605 69 33 75 · pentiumtravel@yahoo.com
+## Sections homepage (ordre réel en production)
+
+1. `HeroSection` — Slider auto (4s) photos HD, pause au survol, indicateurs dots
+2. `ServicesSection` — 2 cartes service (Étudiant / Touriste)
+3. `DestinationsSection` — Grille photos avec overlay (flag + nom), 3 régions
+4. `ProcessSection` — Timeline 5 étapes
+5. `PassportChecker` — Vérificateur de visa (199 pays, données réelles, lazy JSON)
+6. `TestimonialsSection` — Carrousel texte + vidéos YouTube/Vimeo
+7. `CtaFinalSection` — CTA rouge final
+8. `Footer` — Contacts, horaires, réseaux sociaux dynamiques
+
+---
+
+## Contenu validé
+
+- Témoignages : 6 clients (Joyce Kamdem, Jeanne Tchatoie, Léa Dogmo, Coralie Bridaelle, Franck Essaka, Famille Mbappé)
+- Contacts : +237 657 644 907 · +33 605 69 33 75 · pentiumtravel@yahoo.com
 - Adresses : Douala · Yaoundé (Cameroun)
 - Réseaux : Facebook · WhatsApp · TikTok · Instagram
 - Accroche clé : "BAC EN POCHE · VISA EN MAIN !"
 
-### Sections homepage (ordre figé)
-1. HeroSection
-2. ServicesSection
-3. DestinationsSection
-4. ProcessSection
-5. VisaCheckSection
-6. TestimonialsSection
-7. CtaFinalSection
-8. Footer
-
 ---
 
-## Ce qui est fait ✅
+## État complet du projet ✅
 
-### Phase 1 — Setup projet
+### Setup & infrastructure
 - [x] Next.js 16.2.3 (TypeScript + Tailwind v4 + App Router)
 - [x] Payload CMS v3.82.1 installé et configuré
-- [x] PostgreSQL local configuré (`pentium_travel`)
-- [x] Migrations Payload appliquées (12 tables créées)
-- [x] Premier utilisateur admin créé (`admin@pentiumtravel.com`)
+- [x] PostgreSQL local (`pentium_travel` / postgres:postgres123)
+- [x] Migrations Payload appliquées
 - [x] `globals.css` avec palette Pentium Travel via `@theme`
-- [x] `tsconfig.json` avec alias `@payload-config` → `./payload.config.ts`
-- [x] `next.config.ts` avec `withPayload` wrapper
-- [x] `.env.local` configuré
-- [x] Structure dossiers créée
+- [x] `tsconfig.json` avec alias `@payload-config`
+- [x] `next.config.ts` avec `withPayload` + `images.unsplash.com` remotePatterns
+- [x] `.env.local` configuré (DB, Payload secret, SMTP Brevo, MAIL_TO)
 
-### Phase 2 — Composants partagés
-- [x] `Navbar` (logo h-20, liens, CTA rouge, hamburger mobile)
-- [x] `Footer` (grille contacts, horaires, réseaux sociaux — sans logo)
-- [x] Layout `(site)/layout.tsx` → root layout avec `<html>`, fonts, globals.css
+### Composants partagés
+- [x] `Navbar` — logo h-20, liens, CTA rouge, hamburger mobile
+- [x] `Footer` — async server component, liens réseaux sociaux dynamiques depuis Payload
+- [x] `ContactForm` — états idle/loading/success/error, select service aligné sur slugs Payload
+- [x] `PassportChecker` — 199 pays, combobox filtrée, lazy JSON, Framer Motion
+- [x] `AdminLogo` + `AdminIcon` — branding Payload CMS
 
-### Phase 3 — Page d'accueil
-- [x] `HeroSection` (gradient sombre, badge, 2 CTA)
-- [x] `ServicesSection` (2 cartes service)
-- [x] `DestinationsSection` (listes texte par région)
-- [x] `ProcessSection` (timeline 5 étapes)
-- [x] `VisaCheckSection` (widget interactif 2 dropdowns)
-- [x] `TestimonialsSection` (carrousel 6 témoignages)
-- [x] `CtaFinalSection` (CTA rouge)
-- [x] `app/(site)/page.tsx` (homepage complète)
+### Pages publiques
+- [x] `/` — homepage complète avec toutes les sections, `force-dynamic`
+- [x] `/etudiants` — hero, accroche BAC EN POCHE, destinations, services avec photos, process, logement, CTA
+- [x] `/touristes` — hero, valeurs, services, destinations, process, CTA
+- [x] `/contact` — formulaire + infos coordonnées
 
-### Phase 4 — Pages dédiées
-- [x] `/etudiants` (3 piliers, logement, CTA)
-- [x] `/touristes` (services, destinations, CTA)
-- [x] `/contact` (formulaire + ContactForm avec états idle/loading/success/error)
-- [x] `app/api/contact/route.ts` (handler POST)
-- [x] `lib/visa-data.ts` (checkVisa, pays, destinations)
+### Backoffice Payload CMS
+- [x] Collection `destinations` — nom, région, type (études/tourisme/les deux), actif, flag emoji, photo URL
+- [x] Collection `testimonials` — nom, localisation, texte, type (text/vidéo), videoUrl, avatar (upload), publié, ordre
+- [x] Collection `contacts` — nom, email, téléphone, service, message, statut lead (nouveau/en cours/traité)
+- [x] Collection `media` — upload images
+- [x] Collection `hero-slides` — label, imageSource (url/upload), image (media), imageUrl, ordre, actif
+- [x] Global `social-links` — Facebook (URL), WhatsApp (numéro), TikTok (URL), Instagram (URL)
+- [x] Utilisateurs admin natifs Payload
+- [x] Branding admin : sidebar noir, boutons rouge, logo Pentium Travel, focus ring bleu
 
-### Phase 5 — Backoffice Payload CMS
-- [x] Collection `destinations` (nom, région, type, actif)
-- [x] Collection `testimonials` (nom, pays, texte, vidéo URL, photo, publié, ordre)
-- [x] Collection `contacts` (formulaire, statut lead)
-- [x] Collection `media` (upload images)
-- [x] Admin 500 résolu (layout `(payload)` avec `RootLayout` Payload + server action)
-- [x] Admin UI brandé aux couleurs Pentium Travel :
-  - Sidebar fond noir (`#0D0D0D`)
-  - Boutons primaires rouge (`#B91C1C`)
-  - Focus ring bleu (`#7DB8D8`)
-  - Logo Pentium Travel sur page login et sidebar
-  - Bordure rouge en haut du header
+### Fonctionnalités dynamiques
+- [x] Slider hero homepage — données depuis `hero-slides` Payload, dual source (URL ou upload)
+- [x] Testimonials — données depuis `testimonials` Payload, support vidéo YouTube/Vimeo iframe + avatar photo
+- [x] Destinations étudiants/touristes — données depuis `destinations` Payload, grille photos avec overlay
+- [x] Réseaux sociaux footer — données depuis global `social-links` Payload
+- [x] PassportChecker — `public/data/passport-index.json` (199×199 matrice visa, open-source)
+- [x] Route `/api/seed` — peuple la BD (6 témoignages + 15 destinations + 5 slides)
+
+### Formulaire contact & emails
+- [x] `POST /api/contact` — validation, sauvegarde Payload, envoi emails
+- [x] Email de notification HTML → `pentiumtravel@yahoo.com` (replyTo = email client)
+- [x] Email de confirmation HTML → adresse du client
+- [x] Relais SMTP : Brevo (`smtp-relay.brevo.com:587`), expéditeur `contact@synaptic-inc.ca`
+
+### Typographie & design
+- [x] Police corps : `text-base` (16px) sur tous les textes de contenu
+- [x] Couleur titres sections destinations : `text-brand-blue` (#7DB8D8) cohérent étudiants/touristes
+- [x] Hiérarchie préservée : H1/H2/H3, badges, CTAs non modifiés
 
 ---
 
 ## Ce qui reste à faire
 
-### Modifications ciblées (en cours)
-- [x] Connecter `TestimonialsSection` → données Payload (seeded + fetch local API)
-- [x] Connecter destinations étudiants/touristes → données Payload (seeded + fetch local API)
-- [x] Champ `flag` ajouté à la collection `destinations` (emoji drapeau)
-- [x] Route `/api/seed` créée pour peupler la BD (6 témoignages, 15 destinations)
-- [x] Tous les numéros WhatsApp CTA → numéro France (+33 605 69 33 75)
-- [x] Section logement étudiant : grande image principale + grille 3×3 petites photos (Unsplash)
-- [x] `next.config.ts` : `images.unsplash.com` ajouté aux remotePatterns
-- [x] `TestimonialsSection` → fond blanc (refonte couleurs)
-- [x] Services étudiants : 3 vraies images marketing depuis `public/services/`
-- [x] Destinations : grille photo avec overlay (flag + nom) sur touristes et étudiants
-- [x] Champ `photo` (URL) ajouté à la collection `destinations` → gérable depuis backoffice
-- [x] Seed mis à jour avec URLs photos pour les 15 destinations
-- [x] Pages lisent `d.photo` depuis la BD (plus de mapping hardcodé)
-- [x] Slider hero homepage : 5 photos HD (Paris, NY, Dubaï, Barcelone, Istanbul), auto 4s, pause au survol, indicateurs
-- [x] Collection `hero-slides` créée (label, imageUrl, order, active) → gérable depuis backoffice
-- [x] Seed mis à jour : 5 slides seedés
-- [x] PassportChecker intégré en remplacement de VisaCheckSection :
-  - 199 pays (passport-index-dataset, open-source)
-  - Combobox avec recherche filtrée + emoji drapeaux
-  - Chargement lazy du JSON (892 KB) au premier clic
-  - Résultat coloré instantané (vert/jaune/orange/rouge)
-  - Animations Framer Motion
-  - `data/countries.ts` créé (types + COUNTRIES_SORTED + flagEmoji)
-  - `scripts/update-passport-data.mjs` pour régénérer le JSON
-  - `public/data/passport-index.json` généré (199 passeports)
-- [x] Global `social-links` créé dans Payload (Facebook, WhatsApp, TikTok, Instagram)
-- [x] `Footer.tsx` converti en composant async → lit les liens depuis le backoffice (`payload.findGlobal`)
-- [x] Collection `hero-slides` → support dual source : URL externe OU upload fichier (champ conditionnel)
-- [x] `app/(site)/page.tsx` → résolution image slide depuis `imageSource` (upload.url OU imageUrl)
-- [x] Couleur titre "Explorez des horizons..." sur page touristes → `text-brand-blue` (cohérent avec étudiants)
-- [x] Taille police corps de texte augmentée : `text-sm` → `text-base` (16px) sur descriptions services, étapes process, témoignages, logement, contact
-- [x] Brevo SMTP configuré (`smtp-relay.brevo.com:587`) via nodemailer
-- [x] `app/api/contact/route.ts` : email de notification → `pentiumtravel@yahoo.com` + email de confirmation → client
-- [x] Soumissions contact sauvegardées dans la collection `contacts` Payload (+ statut lead)
-- [x] `ContactForm.tsx` : options service corrigées (value = slug Payload, label = texte affiché)
+### Déploiement VPS (Hostinger)
+- [ ] Configurer Nginx (reverse proxy port 3000)
+- [ ] Configurer PM2 (process manager)
+- [ ] SSL via Let's Encrypt (certbot)
+- [ ] Variables d'environnement production (`.env` sur le VPS)
+- [ ] Migration DB production (PostgreSQL sur VPS)
+- [ ] Tester l'envoi email en production (domaine Brevo à configurer pour pentium-travel.com)
 
-### Phase 7 — Déploiement VPS
-- [ ] Configurer Nginx
-- [ ] Configurer PM2
-- [ ] SSL via Let's Encrypt
-- [ ] Variables d'environnement production
-- [ ] Migration DB production
+### Améliorations futures (non bloquantes)
+- [ ] SEO : Open Graph images par page
+- [ ] Analytics (Plausible ou Google Analytics)
+- [ ] Page de politique de confidentialité (RGPD)
 
 ---
 
-## Bugs / points d'attention
+## Variables d'environnement (.env.local)
 
-- **Turbopack** : désactivé via `--webpack` dans tous les scripts (Turbopack casse les React Context de Payload)
-- **Logo warning** : Next.js Image avertit que width/height sont modifiés — non bloquant
-- **Resend** : clé placeholder `re_placeholder` — à remplacer en production
-- **Email adapter Payload** : non configuré → emails écrits dans la console (normal en dev)
+```
+DATABASE_URL=postgresql://postgres:postgres123@localhost:5432/pentium_travel
+PAYLOAD_SECRET=pentium_travel_secret_2026_xK9mP3qR7nL2vB8w
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Brevo SMTP
+SMTP_HOST=smtp-relay.brevo.com
+SMTP_PORT=587
+SMTP_USER=a76ff3001@smtp-brevo.com
+SMTP_PASS=<voir .env.local local — ne jamais committer>
+SMTP_FROM=contact@synaptic-inc.ca
+MAIL_TO=pentiumtravel@yahoo.com
+```
+
+> ⚠️ `.env.local` est dans `.gitignore` — ne jamais committer les credentials.
+
+---
+
+## Points d'attention techniques
+
+- **Turbopack** : désactivé via `--webpack` dans tous les scripts npm (`dev`, `build`) — Turbopack casse les React Context de Payload CMS
+- **force-dynamic** : ajouté sur `app/(site)/page.tsx` pour désactiver le cache Next.js sur la homepage (testimonials, slides en temps réel)
+- **Footer async** : `Footer.tsx` est un Server Component async — il appelle `getPayload()` à chaque requête, ce qui est normal et performant côté serveur
+- **Passport JSON** : `public/data/passport-index.json` (892 KB) — chargé en lazy au premier clic sur PassportChecker. Pour le mettre à jour : `node scripts/update-passport-data.mjs`
+- **Photos destinations** : URLs Unsplash stockées dans la BD (champ `photo` de la collection `destinations`) — éditables depuis le backoffice
 
 ---
 
 ## Décisions validées
 
-- [x] **Domaine** : pentium-travel.com
-- [x] **Logo** : `public/images/logo.jpeg` (JPEG, pas de SVG)
-- [x] **Prix** : aucun prix affiché sur le site
-- [x] **Langue** : 100% français, pas d'internationalisation
-- [x] **Vidéos témoignages** : liens YouTube/Vimeo (pas d'upload direct)
-- [x] **Déploiement** : différé (à faire quand le site est finalisé)
-- [x] **Sections** : Visa Check et Témoignages = sections homepage uniquement
+| Décision | Valeur |
+|---|---|
+| Domaine cible | pentium-travel.com |
+| Logo | `public/images/logo.jpeg` (JPEG fourni client) |
+| Prix affichés | Aucun |
+| Langue | 100% français, pas d'i18n |
+| Vidéos témoignages | Liens YouTube/Vimeo (pas d'upload direct) |
+| Destinations | Grilles photos avec overlay, pas de pages détail |
+| Visa Check | Section homepage uniquement (PassportChecker) |
+| Témoignages | Section homepage uniquement |
+| Email provider | Brevo SMTP (nodemailer) — domaine test : synaptic-inc.ca |
 
 ---
 
 ## Journal des sessions
 
-### 2026-04-12 — Session 1 (cadrage)
-- Analyse de l'ancien site Wix (6 captures)
-- Définition complète de l'architecture, des pages, des sections
-- Extraction de tout le contenu existant
-- Création des 3 fichiers de cadrage (CLAUDE.md, DESIGN.md, PROJECT.md)
-
 ### 2026-04-13 — Session 6 (email Brevo SMTP + sauvegarde contacts)
-- nodemailer installé (`@types/nodemailer` inclus)
-- `.env.local` : variables SMTP_HOST/PORT/USER/PASS/FROM + MAIL_TO ajoutées (Brevo)
-- `app/api/contact/route.ts` : réécriture complète
-  - Sauvegarde dans Payload CMS collection `contacts`
-  - Email notification HTML → `pentiumtravel@yahoo.com` (replyTo = email client)
-  - Email confirmation HTML → adresse client
-- `ContactForm.tsx` : select service passe maintenant les slugs Payload (valeurs alignées)
+- `nodemailer` + `@types/nodemailer` installés
+- `.env.local` : variables SMTP Brevo ajoutées
+- `app/api/contact/route.ts` : réécriture complète — sauvegarde Payload + 2 emails HTML
+- `ContactForm.tsx` : options `<select>` service alignées sur slugs Payload (`value` ≠ `label`)
 
-### 2026-04-13 — Session 5 (taille police corps de texte)
-- Augmentation police corps : `text-sm` → `text-base` (16px) sur tous les composants de contenu
-  - ServicesSection (features), ProcessSection (descriptions), TestimonialsSection (texte)
-  - etudiants (descriptions services + checklist logement), touristes (descriptions + étapes)
-  - contact (infos coordonnées + liens)
-- Titres H1/H2/H3, badges, CTAs et labels UI : inchangés (hiérarchie préservée)
+### 2026-04-13 — Session 5 (typographie)
+- Corps de texte : `text-sm` (14px) → `text-base` (16px) sur 6 composants/pages
+- Titres, badges, CTAs non touchés (hiérarchie préservée)
 
-### 2026-04-13 — Session 4 (backoffice réseaux sociaux + hero slides dual source + couleur)
-- Global `social-links` (Payload) créé + enregistré dans `payload.config.ts`
-- `Footer.tsx` → async server component, liens dynamiques depuis le backoffice
-- `HeroSlides` collection → `imageSource` select + upload conditionnel OU URL externe
-- `page.tsx` → résolution image slide selon `imageSource`
-- Couleur "Explorez des horizons..." : `text-brand-navy` → `text-brand-blue` (cohérence étudiants/touristes)
+### 2026-04-13 — Session 4 (backoffice réseaux sociaux + hero dual source + couleur)
+- Global `social-links` Payload créé + enregistré dans `payload.config.ts`
+- `Footer.tsx` → async server component, liens dynamiques depuis backoffice
+- `hero-slides` : champ `imageSource` conditionnel (upload fichier OU URL externe)
+- `page.tsx` : résolution image slide selon `imageSource`
+- Titre "Explorez des horizons..." → `text-brand-blue` (cohérence étudiants/touristes)
 
-### 2026-04-12 — Session 2 (build complet + admin fix + branding)
-- Phases 1 à 5 complétées (setup, composants, homepage, pages, backoffice)
-- Résolution du bug admin 500 : pattern "multiple root layouts" Next.js
-  - `app/layout.tsx` racine supprimé
-  - `(site)/layout.tsx` → root layout complet avec `<html>`, fonts, CSS
-  - `(payload)/layout.tsx` → `RootLayout` Payload avec `handleServerFunctions` server action
-- Désactivation Turbopack (`--webpack`) : Turbopack cassait les React Context Payload
-- Branding admin : CSS custom (`admin-custom.css`), `AdminLogo`, `AdminIcon`
-- **Prochaine étape** : modifications ciblées + connexion données Payload + Resend
+### 2026-04-13 — Session 3 (contenu dynamique avancé)
+- `PassportChecker` intégré (remplace `VisaCheckSection`) : 199 pays, lazy JSON, Framer Motion
+- `data/countries.ts` + `scripts/update-passport-data.mjs` + `public/data/passport-index.json`
+- Testimonials : support vidéo YouTube/Vimeo (iframe embed) + avatar photo depuis Payload
+- `force-dynamic` ajouté sur la homepage
+
+### 2026-04-13 — Session 2 (contenu dynamique + photos)
+- Slider hero homepage : 5 photos HD, auto 4s, pause survol, indicateurs dots
+- Collection `hero-slides` créée dans Payload
+- Destinations : grille photos avec overlay (flag + nom) sur étudiants et touristes
+- Champ `photo` (URL) ajouté à la collection `destinations`
+- Services étudiants : 3 vraies photos marketing depuis `public/services/`
+- Section logement : grande image principale + grille 6 petites photos
+- Route `/api/seed` créée
+
+### 2026-04-12 — Session 1 (build complet + admin)
+- Setup complet Next.js 16 + Payload CMS v3 + PostgreSQL
+- 4 pages publiques + admin
+- Toutes les sections homepage
+- Backoffice Payload avec collections et branding admin
+- Résolution bug admin 500 (multiple root layouts)
+- Désactivation Turbopack (`--webpack`)
