@@ -9,7 +9,15 @@ export const metadata: Metadata = {
     template: '%s | Pentium Travel',
   },
   description: 'Agence de voyage spécialisée en accompagnement étudiant et visa touristique. Douala · Yaoundé.',
-  metadataBase: new URL('https://pentium-travel.com'),
+  metadataBase: new URL('https://pentium-travel.synaptic-inc.ca'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    shortcut: '/favicon.ico',
+  },
 }
 
 export default function SiteLayout({
